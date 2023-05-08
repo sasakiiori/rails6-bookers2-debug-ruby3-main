@@ -3,6 +3,7 @@ before_action :ensure_correct_user, only: [:update, :edit]
   def show
     @book = Book.find(params[:id])
     @books = Book.new
+    @post_comment = PostComment.new
   end
 
   def index
