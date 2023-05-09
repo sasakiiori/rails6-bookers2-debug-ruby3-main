@@ -30,15 +30,8 @@
       <% end %>
     </td>
     <% end %>
+<td>コメント件数：<%= @book.post_comments.count %></td>
 
-    <div>
-  <td>コメント件数：<%= @book.post_comments.count %></td>
-  <% @book.post_comments.each do |post_comment| %>
-    <td><%= image_tag post_comment.user.get_profile_image, size:"100x100" %></td>
-    <%= post_comment.user.name %>
-    <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
-  <% end %>
-</div>
 
           <% if current_user == @book.user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
@@ -47,6 +40,17 @@
 
         </tr>
       </table>
+          <div>
+
+  <% @book.post_comments.each do |post_comment| %>
+  <%= link_to(post_comment.user) do %>
+  <%= image_tag post_comment.user.get_profile_image, size:"100x100" %>
+    <%= post_comment.user.name %>
+   <% end %>
+
+   <%= post_comment.comment %>
+  <% end %>
+</div>
       <div>
   <%= form_with model: [@book, @post_comment] do |f| %>
     <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
